@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"html/template"
 	"net/http"
+	"regexp"
+	"strconv"
 	"todo_app/app/models"
 	"todo_app/config"
 )
@@ -44,6 +46,33 @@ func session(w http.ResponseWriter, r *http.Request) (sess models.Session, err e
 	return sess, err
 }
 
+// 正規表現の定義
+var validPath = regexp.MustCompile("^/todos/(edit|update|delete)/([0-9]+)$")
+
+func parseURL(fn func(http.ResponseWriter, *http.Request, int)) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		// URLから正規表現にマッチしたものを取得
+		q := validPath.FindStringSubmatch(r.URL.Path)
+
+		// マッチしなかった場合
+		if q == nil {
+			http.NotFound(w, r)
+			return
+		}
+
+		// IDを数値型にする
+		qi, err := strconv.Atoi(q[2])
+
+		// エラーハンドリング
+		if err != nil {
+			http.NotFound(w, r)
+			return
+		}
+
+		fn(w, r, qi)
+	}
+}
+
 func StartMainServer() error {
 	files := http.FileServer(http.Dir(config.Config.Static))
 
@@ -73,6 +102,12 @@ func StartMainServer() error {
 
 	// URLの登録（「/todos/save」に訪れたらtodoを保存する）
 	http.HandleFunc("/todos/save", todoSave)
+
+	// URLの登録（「/todos/edit」に訪れたらtodoを保存する）
+	http.HandleFunc("/todos/edit/", parseURL(todoEdit))
+
+	// URLの登録（「/todos/update」に訪れたらtodoをupdateする）
+	http.HandleFunc("/todos/update/", parseURL(todoUpdate))
 
 	// Webサーバー構築
 	return http.ListenAndServe(":"+config.Config.Port, nil)
