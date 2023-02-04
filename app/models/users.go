@@ -38,3 +38,24 @@ func (u *User) CreateUser() (err error) {
 	}
 	return err
 }
+
+// Userを取得する関数
+func GetUser(id int) (user User, err error) {
+	// userを定義
+	user = User{}
+
+	// userの情報を取得するコマンドを定義
+	cmd := `select id, uuid, name, email, password, created_at from users where id = ?`
+
+	// userの情報を取得するコマンドの実行
+	err = Db.QueryRow(cmd, id).Scan(
+		&user.ID,
+		&user.UUID,
+		&user.Name,
+		&user.Email,
+		&user.PassWord,
+		&user.CreatedAt,
+	)
+
+	return user, err
+}
