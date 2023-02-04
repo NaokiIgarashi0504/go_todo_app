@@ -36,6 +36,12 @@ func StartMainServer() error {
 	// URLの登録（「signup」に訪れたらtopを表示する）
 	http.HandleFunc("/signup", signup)
 
+	// URLの登録（「login」に訪れたらtopを表示する）
+	http.HandleFunc("/login", login)
+
+	// URLの登録（「authenticate」に訪れたらtopを表示する）
+	http.HandleFunc("/authenticate", authenticate)
+
 	// Webサーバー構築
 	return http.ListenAndServe(":"+config.Config.Port, nil)
 }
