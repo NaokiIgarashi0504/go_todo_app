@@ -68,6 +68,12 @@ func StartMainServer() error {
 	// URLの登録（「logout」に訪れたらindexを表示する）
 	http.HandleFunc("/logout", logout)
 
+	// URLの登録（「/todos/new」に訪れたらtodo作成ページを表示する）
+	http.HandleFunc("/todos/new", todoNew)
+
+	// URLの登録（「/todos/save」に訪れたらtodoを保存する）
+	http.HandleFunc("/todos/save", todoSave)
+
 	// Webサーバー構築
 	return http.ListenAndServe(":"+config.Config.Port, nil)
 }
