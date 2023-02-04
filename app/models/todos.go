@@ -32,7 +32,7 @@ func (u *User) CreateTodo(content string) (err error) {
 	return err
 }
 
-// データ取得（todos）
+// データ取得（todo）
 func GetTodo(id int) (todo Todo, err error) {
 	cmd := `select id, content, user_id, created_at from todos where id = ?`
 
@@ -46,4 +46,42 @@ func GetTodo(id int) (todo Todo, err error) {
 		&todo.CreatedAt)
 
 	return todo, err
+}
+
+// データ取得（todos）
+func GetTodos() (todos []Todo, err error) {
+	// selectコマンドを定義
+	cmd := `select id, content, user_id, created_at from todos`
+
+	// selectコマンドの実行
+	rows, err := Db.Query(cmd)
+
+	// エラーハンドリング
+	if err != nil {
+		log.Panicln(err)
+	}
+
+	for rows.Next() {
+		// 変数todoを定義
+		var todo Todo
+
+		// スキャン
+		err = rows.Scan(
+			&todo.ID,
+			&todo.Content,
+			&todo.UserID,
+			&todo.CreatedAt)
+
+		// エラーハンドリング
+		if err != nil {
+			log.Panicln(err)
+		}
+
+		// appendする
+		todos = append(todos, todo)
+	}
+
+	rows.Close()
+
+	return todos, err
 }
