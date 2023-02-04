@@ -2,10 +2,14 @@ package main
 
 import (
 	"fmt"
+	"todo_app/app/controllers"
 	"todo_app/app/models"
 )
 
 func main() {
+	fmt.Println(models.Db)
+
+	controllers.StartMainServer()
 	/*
 			fmt.Println(config.Config.Port)
 			fmt.Println(config.Config.SQLDriver)
@@ -14,7 +18,6 @@ func main() {
 
 		log.Println("test")
 	*/
-	fmt.Println(models.Db)
 
 	/*
 		u := &models.User{}
@@ -70,6 +73,8 @@ func main() {
 		}
 	*/
 
-	t, _ := models.GetTodo(3)
-	t.DeleteTodo()
+	/*
+		t, _ := models.GetTodo(3)
+		t.DeleteTodo()
+	*/
 }
