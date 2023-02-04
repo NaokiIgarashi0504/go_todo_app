@@ -60,12 +60,29 @@ func GetUser(id int) (user User, err error) {
 	return user, err
 }
 
+// Userを更新する関数
 func (u *User) UpdateUser() (err error) {
 	// updateのコマンドを定義
 	cmd := `update users set name = ?, email = ? where id = ?`
 
 	// updateコマンドの実行
 	_, err = Db.Exec(cmd, u.Name, u.Email, u.ID)
+
+	// エラーハンドリング
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	return err
+}
+
+// Userを削除する関数
+func (u *User) DeleteUser() (err error) {
+	// deleteコマンドの定義
+	cmd := `delete from users where id = ?`
+
+	// deleteコマンドの実行
+	_, err = Db.Exec(cmd, u.ID)
 
 	// エラーハンドリング
 	if err != nil {
