@@ -123,3 +123,19 @@ func (u *User) GetTodosByUser() (todos []Todo, err error) {
 
 	return todos, err
 }
+
+// 更新処理をする関数
+func (t *Todo) UpdateTodo() error {
+	// updateするコマンドを定義
+	cmd := `update todos set content = ?, user_id = ? where id = ?`
+
+	// updateコマンドの実行
+	_, err := Db.Exec(cmd, t.Content, t.UserID, t.ID)
+
+	// エラーハンドリング
+	if err != nil {
+		log.Panicln(err)
+	}
+
+	return err
+}
