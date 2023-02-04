@@ -13,6 +13,7 @@ type User struct {
 	Email     string
 	PassWord  string
 	CreatedAt time.Time
+	Todos     []Todo
 }
 
 // Sessionのstructを定義
@@ -195,4 +196,22 @@ func (sess *Session) DeleteSessionByUUID() (err error) {
 	}
 
 	return err
+}
+
+func (sess *Session) GetUserBySession() (user User, err error) {
+	// ユーザーを定義
+	user = User{}
+
+	// ユーザー情報を取得するコマンドを定義
+	cmd := `select id, uuid, name, email, created_at from users where id = ?`
+
+	// ユーザー情報を取得するコマンドを実行
+	err = Db.QueryRow(cmd, sess.UserID).Scan(
+		&user.ID,
+		&user.UUID,
+		&user.Name,
+		&user.Email,
+		&user.CreatedAt)
+
+	return user, err
 }
