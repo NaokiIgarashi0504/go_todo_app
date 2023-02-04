@@ -85,3 +85,41 @@ func GetTodos() (todos []Todo, err error) {
 
 	return todos, err
 }
+
+// 特定のuserのtodoを取得する関数
+func (u *User) GetTodosByUser() (todos []Todo, err error) {
+	// ユーザーに紐づくデータ取得のコマンドを定義
+	cmd := `select id, content, user_id, created_at from todos where user_id = ?`
+
+	// ユーザーに紐づくデータ取得のコマンドを実行
+	rows, err := Db.Query(cmd, u.ID)
+
+	// エラーハンドリング
+	if err != nil {
+		log.Panicln(err)
+	}
+
+	for rows.Next() {
+		// 変数todoを定義
+		var todo Todo
+
+		// スキャン
+		err = rows.Scan(
+			&todo.ID,
+			&todo.Content,
+			&todo.UserID,
+			&todo.CreatedAt)
+
+		// エラーハンドリング
+		if err != nil {
+			log.Panicln(err)
+		}
+
+		// appendする
+		todos = append(todos, todo)
+	}
+
+	rows.Close()
+
+	return todos, err
+}
