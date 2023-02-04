@@ -109,6 +109,9 @@ func StartMainServer() error {
 	// URLの登録（「/todos/update」に訪れたらtodoをupdateする）
 	http.HandleFunc("/todos/update/", parseURL(todoUpdate))
 
+	// URLの登録（「/todos/delete」に訪れたらtodoをdeleteする）
+	http.HandleFunc("/todos/delete/", parseURL(todoDelete))
+
 	// Webサーバー構築
 	return http.ListenAndServe(":"+config.Config.Port, nil)
 }

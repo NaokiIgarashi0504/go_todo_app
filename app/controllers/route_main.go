@@ -171,3 +171,39 @@ func todoUpdate(w http.ResponseWriter, r *http.Request, id int) {
 		http.Redirect(w, r, "/todos", 302)
 	}
 }
+
+// updateに関する処理
+func todoDelete(w http.ResponseWriter, r *http.Request, id int) {
+	// セッションの確認
+	sess, err := session(w, r)
+
+	if err != nil {
+		// ログインしていない場合は、ログインページにリダイレクト
+		http.Redirect(w, r, "/login", 302)
+	} else {
+		// ログインしている場合
+		// ユーザー情報を取得
+		_, err := sess.GetUserBySession()
+
+		// エラーハンドリング
+		if err != nil {
+			log.Panicln(err)
+		}
+
+		// 該当のtodoを取得
+		t, err := models.GetTodo(id)
+
+		// エラーハンドリング
+		if err != nil {
+			log.Panicln(err)
+		}
+
+		// deleteの実行
+		if err := t.DeleteTodo(); err != nil {
+			log.Panicln(err)
+		}
+
+		// 一覧画面にリダイレクト
+		http.Redirect(w, r, "/todos", 302)
+	}
+}
