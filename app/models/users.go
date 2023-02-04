@@ -180,3 +180,19 @@ func (sess *Session) CheckSession() (valid bool, err error) {
 
 	return valid, err
 }
+
+// ログアウトの関数
+func (sess *Session) DeleteSessionByUUID() (err error) {
+	// セッションを削除するコマンドを定義
+	cmd := `delete from sessions where uuid = ?`
+
+	// コマンドを実行
+	_, err = Db.Exec(cmd, sess.UUID)
+
+	// エラーハンドリング
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	return err
+}

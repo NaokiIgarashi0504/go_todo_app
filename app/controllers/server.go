@@ -65,6 +65,9 @@ func StartMainServer() error {
 	// URLの登録（「todos」に訪れたらindexを表示する）（ログインしているユーザー）
 	http.HandleFunc("/todos", index)
 
+	// URLの登録（「logout」に訪れたらindexを表示する）
+	http.HandleFunc("/logout", logout)
+
 	// Webサーバー構築
 	return http.ListenAndServe(":"+config.Config.Port, nil)
 }
