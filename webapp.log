@@ -264,3 +264,6 @@ net/http.(*conn).serve(0x1400018c1b0, {0x104f84c78, 0x1400007b350})
 	/usr/local/go/src/net/http/server.go:1995 +0x518
 created by net/http.(*Server).Serve
 	/usr/local/go/src/net/http/server.go:3089 +0x4e8
+2023/02/04 15:06:42 server.go:3217: http: superfluous response.WriteHeader call from todo_app/app/controllers.signup (route_auth.go:39)
+2023/02/04 15:06:50 server.go:3217: http: superfluous response.WriteHeader call from todo_app/app/controllers.signup (route_auth.go:39)
+2023/02/04 15:11:49 server.go:3217: http: superfluous response.WriteHeader call from todo_app/app/controllers.signup (route_auth.go:39)
