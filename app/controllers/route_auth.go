@@ -10,6 +10,17 @@ import (
 func signup(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "GET" {
 		// GETの場合
+		// セッションの確認
+		_, err := session(w, r)
+
+		if err != nil {
+			// ログインしていない場合は、public_navbarを表示
+			generateHTML(w, "Hello", "layout", "public_navbar", "top")
+		} else {
+			// ログインしている場合は、todosを表示
+			http.Redirect(w, r, "/todos", 302)
+		}
+
 		generateHTML(w, nil, "layout", "public_navbar", "signup")
 	} else if r.Method == "POST" {
 		// POSTの場合
@@ -41,7 +52,16 @@ func signup(w http.ResponseWriter, r *http.Request) {
 
 // ログイン画面の表示に関する処理
 func login(w http.ResponseWriter, r *http.Request) {
-	generateHTML(w, nil, "layout", "public_navbar", "login")
+	// セッションの確認
+	_, err := session(w, r)
+
+	if err != nil {
+		// ログインしていない場合は、public_navbarを表示
+		generateHTML(w, nil, "layout", "public_navbar", "login")
+	} else {
+		// ログインしている場合は、todosを表示
+		http.Redirect(w, r, "/todos", 302)
+	}
 }
 
 // ユーザーの認証に関する処理
