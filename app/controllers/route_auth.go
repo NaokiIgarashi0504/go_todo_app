@@ -28,7 +28,7 @@ func signup(w http.ResponseWriter, r *http.Request) {
 
 		// エラーハンドリング
 		if err != nil {
-			log.Panicln(err)
+			log.Fatalln(err)
 		}
 	}
 
@@ -42,7 +42,7 @@ func signup(w http.ResponseWriter, r *http.Request) {
 
 	// ユーザーを作成
 	if err := user.CreateUser(); err != nil {
-		log.Panicln(err)
+		log.Fatalln(err)
 	}
 
 	// ユーザーの登録に成功した場合はトップページにリダイレクト
@@ -70,7 +70,7 @@ func authenticate(w http.ResponseWriter, r *http.Request) {
 
 	// エラーハンドリング
 	if err != nil {
-		log.Panicln(err)
+		log.Fatalln(err)
 	}
 
 	// emailの情報をからユーザー情報を取得する
@@ -78,7 +78,7 @@ func authenticate(w http.ResponseWriter, r *http.Request) {
 
 	// エラーハンドリング
 	if err != nil {
-		log.Panicln(err)
+		log.Fatalln(err)
 		http.Redirect(w, r, "/login", 302)
 	}
 
@@ -89,7 +89,7 @@ func authenticate(w http.ResponseWriter, r *http.Request) {
 
 		// エラーハンドリング
 		if err != nil {
-			log.Panicln(err)
+			log.Fatalln(err)
 		}
 
 		// cookieの作成
@@ -116,7 +116,7 @@ func logout(w http.ResponseWriter, r *http.Request) {
 
 	if err != nil {
 		// エラーの場合
-		log.Panicln(err)
+		log.Fatalln(err)
 	}
 
 	// ErrNoCookieではない場合はセッションのストラクトを作成する

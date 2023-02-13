@@ -33,7 +33,7 @@ func index(w http.ResponseWriter, r *http.Request) {
 
 		// エラーハンドリング
 		if err != nil {
-			log.Panicln(err)
+			log.Fatalln(err)
 		}
 
 		// ユーザーに紐づくtodoを取得
@@ -76,7 +76,7 @@ func todoSave(w http.ResponseWriter, r *http.Request) {
 
 		// エラーハンドリング
 		if err != nil {
-			log.Panicln(err)
+			log.Fatalln(err)
 		}
 
 		// ユーザー情報を取得
@@ -84,7 +84,7 @@ func todoSave(w http.ResponseWriter, r *http.Request) {
 
 		// エラーハンドリング
 		if err != nil {
-			log.Panicln(err)
+			log.Fatalln(err)
 		}
 
 		// 入力した値を取得
@@ -92,7 +92,7 @@ func todoSave(w http.ResponseWriter, r *http.Request) {
 
 		// 新たなtodoを保存
 		if err := user.CreateTodo(content); err != nil {
-			log.Panicln(err)
+			log.Fatalln(err)
 		}
 
 		// 新たなtodoの保存に成功したら、todo一覧ページにリダイレクト
@@ -115,7 +115,7 @@ func todoEdit(w http.ResponseWriter, r *http.Request, id int) {
 
 		// エラーハンドリング
 		if err != nil {
-			log.Panicln(err)
+			log.Fatalln(err)
 		}
 
 		// 該当のtodoを取得
@@ -123,7 +123,7 @@ func todoEdit(w http.ResponseWriter, r *http.Request, id int) {
 
 		// エラーハンドリング
 		if err != nil {
-			log.Panicln(err)
+			log.Fatalln(err)
 		}
 
 		generateHTML(w, t, "layout", "private_navbar", "todo_edit")
@@ -145,7 +145,7 @@ func todoUpdate(w http.ResponseWriter, r *http.Request, id int) {
 
 		// エラーハンドリング
 		if err != nil {
-			log.Panicln(err)
+			log.Fatalln(err)
 		}
 
 		// ユーザー情報を取得
@@ -153,7 +153,7 @@ func todoUpdate(w http.ResponseWriter, r *http.Request, id int) {
 
 		// エラーハンドリング
 		if err != nil {
-			log.Panicln(err)
+			log.Fatalln(err)
 		}
 
 		// contentの内容を取得
@@ -164,7 +164,7 @@ func todoUpdate(w http.ResponseWriter, r *http.Request, id int) {
 
 		// updateの実行
 		if err := t.UpdateTodo(); err != nil {
-			log.Panicln(err)
+			log.Fatalln(err)
 		}
 
 		// 一覧画面にリダイレクト
@@ -187,7 +187,7 @@ func todoDelete(w http.ResponseWriter, r *http.Request, id int) {
 
 		// エラーハンドリング
 		if err != nil {
-			log.Panicln(err)
+			log.Fatalln(err)
 		}
 
 		// 該当のtodoを取得
@@ -195,12 +195,12 @@ func todoDelete(w http.ResponseWriter, r *http.Request, id int) {
 
 		// エラーハンドリング
 		if err != nil {
-			log.Panicln(err)
+			log.Fatalln(err)
 		}
 
 		// deleteの実行
 		if err := t.DeleteTodo(); err != nil {
-			log.Panicln(err)
+			log.Fatalln(err)
 		}
 
 		// 一覧画面にリダイレクト

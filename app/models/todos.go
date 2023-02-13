@@ -26,7 +26,7 @@ func (u *User) CreateTodo(content string) (err error) {
 
 	// エラーハンドリング
 	if err != nil {
-		log.Panicln(err)
+		log.Fatalln(err)
 	}
 
 	return err
@@ -58,7 +58,7 @@ func GetTodos() (todos []Todo, err error) {
 
 	// エラーハンドリング
 	if err != nil {
-		log.Panicln(err)
+		log.Fatalln(err)
 	}
 
 	for rows.Next() {
@@ -74,7 +74,7 @@ func GetTodos() (todos []Todo, err error) {
 
 		// エラーハンドリング
 		if err != nil {
-			log.Panicln(err)
+			log.Fatalln(err)
 		}
 
 		// appendする
@@ -96,7 +96,7 @@ func (u *User) GetTodosByUser() (todos []Todo, err error) {
 
 	// エラーハンドリング
 	if err != nil {
-		log.Panicln(err)
+		log.Fatalln(err)
 	}
 
 	for rows.Next() {
@@ -112,7 +112,7 @@ func (u *User) GetTodosByUser() (todos []Todo, err error) {
 
 		// エラーハンドリング
 		if err != nil {
-			log.Panicln(err)
+			log.Fatalln(err)
 		}
 
 		// appendする
@@ -134,7 +134,7 @@ func (t *Todo) UpdateTodo() error {
 
 	// エラーハンドリング
 	if err != nil {
-		log.Panicln(err)
+		log.Fatalln(err)
 	}
 
 	return err

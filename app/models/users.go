@@ -138,7 +138,7 @@ func (u *User) CreateSession() (session Session, err error) {
 
 	// エラーハンドリング
 	if err != nil {
-		log.Panicln(err)
+		log.Fatalln(err)
 	}
 
 	// 取得するコマンドを定義
